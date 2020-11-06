@@ -1,22 +1,24 @@
-package com.miotec.mioapp.exercicios;
+package com.miotec.mioapp.service;
 
 
+import com.miotec.mioapp.dto.ExercicioDTO;
+import com.miotec.mioapp.domain.Exercicio;
+import com.miotec.mioapp.repository.ExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ExercicioService {
 
-@Autowired
+    @Autowired
     private ExercicioRepository repository;
 
-    @GetMapping()
-    public Iterable<Exercicio> getExercicios(){
-        return repository.findAll();
+    public List<ExercicioDTO> getExercicios() {
+        return ExercicioDTO.create(repository.findAll());
     }
 
     public Optional<Exercicio> getExercicioById(Long id) {
@@ -25,7 +27,7 @@ public class ExercicioService {
 
     public void deleteExercicio(Long id) {
         Optional<Exercicio> exercicio = getExercicioById(id);
-        if(exercicio.isPresent()){
+        if (exercicio.isPresent()) {
             repository.deleteById(id);
         }
     }
@@ -34,4 +36,9 @@ public class ExercicioService {
         Assert.isNull(exercicio.getId(), "Não foi possivil inserir o registro.");
         return repository.save(exercicio);
     }
+
+    public List<ExercicioDTO> carregarExerciciosPorUsuarioId(Long usuarioId) {
+        return ExercicioDTO.create(repository.carregarExerciciosPorUsuarioId(usuarioId));
+    }
 }
+

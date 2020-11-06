@@ -1,6 +1,6 @@
-package com.miotec.mioapp.exercicios;
+package com.miotec.mioapp.domain;
 
-import com.miotec.mioapp.usuarios.Usuario;
+import com.miotec.mioapp.domain.Usuario;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ public class Exercicio {
     private LocalDate data_execicio;
     private Double nota_avaliativa;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_usuario", nullable = true)
     private Usuario usuario;
 
