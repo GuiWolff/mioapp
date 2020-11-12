@@ -1,22 +1,17 @@
 package com.miotec.mioapp.controller;
 
 
+import com.miotec.mioapp.domain.Usuario;
 import com.miotec.mioapp.dto.RequisicaoInsercaoUsuarioDTO;
 import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.service.UsuarioService;
-import com.miotec.mioapp.domain.Usuario;
 import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import java.util.List;
-import java.util.UUID;
-
-import static jdk.nashorn.internal.objects.NativeString.substring;
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
