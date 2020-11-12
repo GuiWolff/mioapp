@@ -6,6 +6,7 @@ import com.miotec.mioapp.dto.RequisicaoInsercaoUsuarioDTO;
 import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.service.UsuarioService;
 import javassist.tools.rmi.ObjectNotFoundException;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,9 @@ public class UsuariosController {
     private UsuarioService service;
 
 
-    @PostMapping()
+
+
+    @GetMapping()
     public ResponseEntity<List<UsuarioDTO>> get() {
         List<UsuarioDTO> u = service.getUsuarios();
         return ResponseEntity.ok(u);
