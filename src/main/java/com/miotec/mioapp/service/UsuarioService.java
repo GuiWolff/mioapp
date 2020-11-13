@@ -39,13 +39,14 @@ public class UsuarioService {
     }
 
     public UsuarioDTO update(Usuario usuario, Long id) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         Assert.notNull(id, "Não foi possivil atualizar o registro.");
         Optional<Usuario> optional = usuarioRepository.findById(id);
         if (optional.isPresent()) {
             Usuario db = optional.get();
             db.setNome(usuario.getNome());
             db.setEmail(usuario.getEmail());
-            db.setSenha(usuario.getSenha());
+            db.setSenha(encoder.encode(usuario.getSenha()));
             System.out.println("Paciente id" + db.getNome());
             usuarioRepository.save(db);
             return UsuarioDTO.create(db);
