@@ -1,22 +1,25 @@
 package com.miotec.mioapp.service;
 
 
-import com.miotec.mioapp.dto.RequisicaoInsercaoUsuarioDTO;
+import com.miotec.mioapp.domain.Usuario;
 import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.repository.UsuarioRepository;
-import com.miotec.mioapp.domain.Usuario;
 import javassist.tools.rmi.ObjectNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 
 @Service
 public class UsuarioService {
@@ -38,18 +41,24 @@ public class UsuarioService {
         return usuario.map(UsuarioDTO::create).orElseThrow(() -> new ObjectNotFoundException("Carro não encontrado"));
     }
 
-    public UsuarioDTO update(Usuario usuario, Long id) {
+    public Usuario update(Usuario usuario, Long id) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         Assert.notNull(id, "Não foi possivil atualizar o registro.");
         Optional<Usuario> optional = usuarioRepository.findById(id);
-        if (optional.isPresent()) {
+        ModelMapper m = new ModelMapper();
+        Usuario u = m.map(usuario, Usuario.class);
+        if (optional != null) {
             Usuario db = optional.get();
-            db.setNome(usuario.getNome());
-            db.setEmail(usuario.getEmail());
-            db.setSenha(encoder.encode(usuario.getSenha()));
-            System.out.println("Paciente id" + db.getNome());
-            usuarioRepository.save(db);
-            return UsuarioDTO.create(db);
+            if(u.getNome() == null) u.setNome(db.getNome());
+            if(u.getEmail() == null) u.setEmail(db.getEmail());
+            if(u.getSenha() == null) {
+                u.setSenha(encoder.encode(db.getNome()));
+            } else {
+                u.setSenha(encoder.encode(u.getSenha()));
+            }
+            System.out.println("Usuario id" + u.getNome());
+            usuarioRepository.save(u);
+            return u;
         } else {
             throw new RuntimeException("Não foi possivel atualizar o registro");
         }
@@ -63,7 +72,7 @@ public class UsuarioService {
 //    }
 
     public UsuarioDTO insert(Usuario usuario) throws Exception {
-        if (usuario.getEmail().isEmpty()) {
+        if (usuario.getSenha().isEmpty()) {
             throw new Exception("A senha não pode estar vazia");
         }
         if (getUsuarioByEmail(usuario.getEmail()) != null) {
@@ -83,18 +92,18 @@ public class UsuarioService {
 
     public void sendEmail(String email) {
 
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String nova_senha = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
+        Usuario u = getUsuarioByEmail(email);
+        u.setSenha(encoder.encode(nova_senha));
+        usuarioRepository.save(u);
 
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            String nova_senha = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
-            Usuario u = getUsuarioByEmail(email);
-            u.setSenha(encoder.encode(nova_senha));
-            usuarioRepository.save(u);
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+        msg.setSubject("Senha temporária de recuperação" );
+        msg.setText("Olá, sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+        mailSender.send(msg);
 
-            SimpleMailMessage msg = new SimpleMailMessage();
-            msg.setTo(email);
-            msg.setSubject("Senha temporária de recuperação" );
-            msg.setText("Olá, sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!");
-            mailSender.send(msg);
 
 
 /*            <h2>&nbsp;</h2>

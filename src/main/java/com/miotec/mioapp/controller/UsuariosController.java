@@ -6,7 +6,6 @@ import com.miotec.mioapp.dto.RequisicaoInsercaoUsuarioDTO;
 import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.service.UsuarioService;
 import javassist.tools.rmi.ObjectNotFoundException;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ public class UsuariosController {
 
     @Autowired
     private UsuarioService service;
-
 
 
 
@@ -40,6 +38,18 @@ public class UsuariosController {
         }
     }
 
+    @PostMapping("/email")
+    public ResponseEntity<?> getUsuarioByEmail(@RequestBody Usuario usuario) {
+        try {
+            UsuarioDTO u = UsuarioDTO.create(service.getUsuarioByEmail(usuario.getEmail()));
+//            Usuario u = (service.getUsuarioByEmail(usuario.getEmail()));
+            return ResponseEntity.ok(u);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
     @PostMapping("/recuperar_senha")
     public ResponseEntity<?> getEmailRecupecao(@RequestBody Usuario usuario) {
         Usuario u = service.getUsuarioByEmail(usuario.getEmail());
@@ -51,10 +61,11 @@ public class UsuariosController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/insert")
+
+    @PostMapping("/inserir")
     public ResponseEntity InsertUsuario(@RequestBody RequisicaoInsercaoUsuarioDTO requisicaoInsercaoUsuario) {
         try {
-            UsuarioDTO u = service.insert(requisicaoInsercaoUsuario.criarUsuario());
+            UsuarioDTO u = (service.insert(requisicaoInsercaoUsuario.criarUsuario()));
             return ResponseEntity.created(null).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -63,7 +74,7 @@ public class UsuariosController {
 
     @PutMapping("/alterar")
     public ResponseEntity setUsuario(@RequestBody Usuario usuario) {
-        UsuarioDTO u = service.update(usuario, usuario.getId());
+        UsuarioDTO u = UsuarioDTO.create(service.update(usuario, usuario.getId()));
         return u != null ? ResponseEntity.ok(u) : ResponseEntity.notFound().build();
     }
 
