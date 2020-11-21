@@ -43,7 +43,7 @@ class MioappApplicationTests {
         nomes_teste.add("Fresno");
 
         List<String> emails_teste = new ArrayList<String>();
-        emails_teste.add("guilherme.wolff@teste.com");
+        emails_teste.add("guilherme.wolff@edu.pucrs.br.com");
         emails_teste.add("tony.stark@teste.com");
         emails_teste.add("michelangello.turtle@teste.com");
         emails_teste.add("pikachu@teste.com");

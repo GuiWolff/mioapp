@@ -78,6 +78,7 @@ public class UsuarioService {
         if (getUsuarioByEmail(usuario.getEmail()) != null) {
             throw new Exception("e-mail já cadastrado");
         }
+
         return UsuarioDTO.create(usuarioRepository.save(usuario));
     }
 
@@ -92,6 +93,7 @@ public class UsuarioService {
 
     public void sendEmail(String email) {
 
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String nova_senha = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
         Usuario u = getUsuarioByEmail(email);
@@ -100,8 +102,8 @@ public class UsuarioService {
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(email);
-        msg.setSubject("Senha temporária de recuperação" );
-        msg.setText("Olá, sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+        msg.setSubject("Senha temporária para efetuar login" );
+        msg.setText("Olá " + u.getNome() + ", sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         mailSender.send(msg);
 
 

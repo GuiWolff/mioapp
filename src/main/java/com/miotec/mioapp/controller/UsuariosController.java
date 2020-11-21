@@ -20,8 +20,6 @@ public class UsuariosController {
     @Autowired
     private UsuarioService service;
 
-
-
     @GetMapping()
     public ResponseEntity<List<UsuarioDTO>> get() {
         List<UsuarioDTO> u = service.getUsuarios();
@@ -42,7 +40,6 @@ public class UsuariosController {
     public ResponseEntity<?> getUsuarioByEmail(@RequestBody Usuario usuario) {
         try {
             UsuarioDTO u = UsuarioDTO.create(service.getUsuarioByEmail(usuario.getEmail()));
-//            Usuario u = (service.getUsuarioByEmail(usuario.getEmail()));
             return ResponseEntity.ok(u);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -60,7 +57,6 @@ public class UsuariosController {
         }
         return ResponseEntity.notFound().build();
     }
-
 
     @PostMapping("/inserir")
     public ResponseEntity InsertUsuario(@RequestBody RequisicaoInsercaoUsuarioDTO requisicaoInsercaoUsuario) {

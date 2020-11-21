@@ -1,9 +1,11 @@
 package com.miotec.mioapp.controller;
 
 import com.miotec.mioapp.domain.Exercicio;
+import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.repository.ExercicioRepository;
 import com.miotec.mioapp.service.ExercicioService;
 import com.miotec.mioapp.domain.Usuario;
+import com.miotec.mioapp.service.UsuarioService;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/exercicios")
 public class ExerciciosController {
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Autowired
     private ExercicioService service;
@@ -30,7 +35,9 @@ public class ExerciciosController {
 
     @PostMapping("/get")
     public ResponseEntity<?> carregarExerciciosPorUsuarioId(@RequestBody Usuario usuario) {
-        var exercicios = service.carregarExerciciosPorUsuarioId(usuario.getId());
+        Usuario user = (usuarioService.getUsuarioByEmail(usuario.getEmail()));
+        Long usuario_id = user.getId();
+        var exercicios = service.carregarExerciciosPorUsuarioId(usuario_id);
         return ResponseEntity.ok(exercicios);
     }
 
