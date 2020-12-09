@@ -13,4 +13,6 @@ public class DadosExercicioDTO {
 
     private LocalDate data_execicio;
     private Double nota_avaliativa;
+    private Long id;
+
 }

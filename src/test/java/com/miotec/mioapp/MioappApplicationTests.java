@@ -73,7 +73,7 @@ class MioappApplicationTests {
                 Exercicio exercicio = new Exercicio();
                 exercicio.setData_execicio(LocalDate.now());
                 Random random = new Random();
-                exercicio.setNota_avaliativa(random.nextDouble());
+                exercicio.setNota_avaliativa(i+0.75);
                 exercicio.setUsuario(usuario);
                 exercicioRepositor.save(exercicio);
             }
@@ -89,7 +89,7 @@ class MioappApplicationTests {
                 Exercicio exercicio = new Exercicio();
                 exercicio.setData_execicio(LocalDate.now());
                 Random random = new Random();
-                exercicio.setNota_avaliativa(random.nextDouble());
+                exercicio.setNota_avaliativa(Double.valueOf(i)+Double.valueOf(j));
                 exercicio.setUsuario(usuario);
                 exercicioRepositor.save(exercicio);
             }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//upload to git in 21/11/20
 
 @RestController
 @RequestMapping("/api/v1/usuarios")

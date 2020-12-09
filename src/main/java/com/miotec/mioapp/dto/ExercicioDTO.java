@@ -31,7 +31,7 @@ public class ExercicioDTO {
             var exercicioDTO = new ExercicioDTO();
             exercicioDTO.setUsuario(listaExercicios.stream().findFirst().get().getUsuario().getNome());
             for (Exercicio exercicio : listaExercicios) {
-                exercicioDTO.getDadosExercicio().add(new DadosExercicioDTO(exercicio.getData_execicio(), exercicio.getNota_avaliativa()));
+                exercicioDTO.getDadosExercicio().add(new DadosExercicioDTO(exercicio.getData_execicio(), exercicio.getNota_avaliativa(), exercicio.getId()));
             }
 
             resultado.add(exercicioDTO);
