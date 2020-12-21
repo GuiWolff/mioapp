@@ -47,10 +47,10 @@ public class ExerciciosController {
 
     }
 
-    @PostMapping("/insert")
-    public String InsertExercicio(@RequestBody Exercicio exercicio) {
+    @PostMapping("/inserir")
+    public Long InsertExercicio(@RequestBody Exercicio exercicio) {
         Exercicio e = service.insert(exercicio);
-        return "Dados do usuario " + e.getData_execicio() + " - " + e.getNota_avaliativa() + " salvos com sucesso";
+        return e.getId();
     }
 
     @DeleteMapping()

@@ -9,6 +9,7 @@ public class UsuarioDTO {
 
     private String nome;
     private String email;
+    private long id;
 
 
     public static UsuarioDTO create(Usuario u){
