@@ -11,11 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,7 +41,7 @@ class MioappApplicationTests {
         nomes_teste.add("Fresno");
 
         List<String> emails_teste = new ArrayList<String>();
-        emails_teste.add("guilherme.wolff@edu.pucrs.br.com");
+        emails_teste.add("guilherme.wolff@edu.pucrs.br");
         emails_teste.add("tony.stark@teste.com");
         emails_teste.add("michelangello.turtle@teste.com");
         emails_teste.add("pikachu@teste.com");
@@ -66,34 +64,33 @@ class MioappApplicationTests {
             Optional<Usuario> u = usuarioRepository.findById(Long.valueOf(i + 1));
         }
 
-        for (int j = 0; j < 10; j++) {
-            for (int i = 0; i < 10; i++) {
-                Optional<Usuario> u = usuarioRepository.findById(Long.valueOf(i + 1));
-                Usuario usuario = u.get();
-                Exercicio exercicio = new Exercicio();
-                exercicio.setData_execicio(LocalDate.now());
-                Random random = new Random();
-                exercicio.setNota_avaliativa(i+0.75);
-                exercicio.setUsuario(usuario);
-                exercicioRepositor.save(exercicio);
-            }
-        }
+//        for (int j = 0; j < 10; j++) {
+//            for (int i = 0; i < 10; i++) {
+//                Optional<Usuario> u = usuarioRepository.findById(Long.valueOf(i + 1));
+//                Usuario usuario = u.get();
+//                Exercicio exercicio = new Exercicio();
+//                exercicio.setData_execicio(Calendar.getInstance());
+//                Random random = new Random();
+//                exercicio.setNota_avaliativa(i+0.75);
+//                exercicio.setUsuario(usuario);
+//                exercicioRepositor.save(exercicio);
+//            }
+//        }
     }
 
     @Test
     void testeExercicios(){
-        for (int j = 0; j < 3; j++) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 3; i++) {
                 Optional<Usuario> u = usuarioRepository.findById(Long.valueOf(i + 1));
                 Usuario usuario = u.get();
                 Exercicio exercicio = new Exercicio();
                 exercicio.setData_execicio(LocalDate.now());
+                exercicio.setHorario(new Timestamp(System.currentTimeMillis()));
                 Random random = new Random();
-                exercicio.setNota_avaliativa(Double.valueOf(i)+Double.valueOf(j));
+                exercicio.setNota_avaliativa(Double.valueOf(i)+Double.valueOf(i));
                 exercicio.setUsuario(usuario);
                 exercicioRepositor.save(exercicio);
             }
-        }
     }
 
 }

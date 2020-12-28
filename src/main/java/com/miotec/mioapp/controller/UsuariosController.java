@@ -9,6 +9,7 @@ import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class UsuariosController {
     @Autowired
     private UsuarioService service;
 
-    @GetMapping()
+    @PostMapping()
     public ResponseEntity<List<UsuarioDTO>> get() {
         List<UsuarioDTO> u = service.getUsuarios();
         return ResponseEntity.ok(u);

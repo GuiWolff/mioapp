@@ -1,7 +1,6 @@
 package com.miotec.mioapp.controller;
 
 import com.miotec.mioapp.domain.Exercicio;
-import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.repository.ExercicioRepository;
 import com.miotec.mioapp.service.ExercicioService;
 import com.miotec.mioapp.domain.Usuario;
@@ -21,7 +20,7 @@ public class ExerciciosController {
     private UsuarioService usuarioService;
 
     @Autowired
-    private ExercicioService service;
+    private ExercicioService exercicioService;
 
     @Autowired
     private ExercicioRepository exercicioRepository;
@@ -29,7 +28,7 @@ public class ExerciciosController {
 
     @PostMapping()
     public ResponseEntity<?> get(){
-        var exercicios = service.getExercicios();
+        var exercicios = exercicioService.getExercicios();
         return ResponseEntity.ok(exercicios);
     }
 
@@ -37,25 +36,31 @@ public class ExerciciosController {
     public ResponseEntity<?> carregarExerciciosPorUsuarioId(@RequestBody Usuario usuario) {
         Usuario user = (usuarioService.getUsuarioByEmail(usuario.getEmail()));
         Long usuario_id = user.getId();
-        var exercicios = service.carregarExerciciosPorUsuarioId(usuario_id);
+        var exercicios = exercicioService.carregarExerciciosPorUsuarioId(usuario_id);
         return ResponseEntity.ok(exercicios);
+    }
+
+    @PostMapping("/horario")
+    public ResponseEntity<?> conferirSeHorarioExiste(@RequestBody Exercicio exercio) {
+        Exercicio e = (exercicioService.getExerxicioByHorario(exercio.getHorario()));
+        return ResponseEntity.ok(e);
     }
 
     @PostMapping("/id")
     public Optional<Exercicio> getExercicioById(@RequestBody Exercicio exercicio) {
-        return service.getExercicioById(exercicio.getId());
+        return exercicioService.getExercicioById(exercicio.getId());
 
     }
 
     @PostMapping("/inserir")
     public Long InsertExercicio(@RequestBody Exercicio exercicio) {
-        Exercicio e = service.insert(exercicio);
+        Exercicio e = exercicioService.insert(exercicio);
         return e.getId();
     }
 
     @DeleteMapping()
     public void deleteExercicio(@RequestBody Exercicio exercicio) {
-        service.deleteExercicio(exercicio.getId());
+        exercicioService.deleteExercicio(exercicio.getId());
 
     }
 

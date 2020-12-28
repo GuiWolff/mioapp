@@ -1,9 +1,9 @@
 package com.miotec.mioapp.domain;
 
-import com.miotec.mioapp.domain.Usuario;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
@@ -14,10 +14,15 @@ public class Exercicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate data_execicio;
+    private Timestamp horario;
     private Double nota_avaliativa;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_usuario", nullable = true)
     private Usuario usuario;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_protocolo", nullable = true)
+    private Protocolo protocolo;
 
 }

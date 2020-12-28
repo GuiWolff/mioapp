@@ -24,7 +24,6 @@ public class SwaggerConfig {
                 .build()
                 .apiInfo(apiInfo());
     }
-
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .contact(new Contact("Guilherme Wolff", "", ""))

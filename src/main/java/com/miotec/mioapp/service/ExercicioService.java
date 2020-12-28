@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,11 +35,19 @@ public class ExercicioService {
 
     public Exercicio insert(Exercicio exercicio) {
         Assert.isNull(exercicio.getId(), "Não foi possivil inserir o registro.");
-        return repository.save(exercicio);
+        if(repository.getHorario(exercicio.getHorario()) != null){
+            return repository.getHorario(exercicio.getHorario());
+        }else{
+            return repository.save(exercicio);
+        }
     }
 
     public List<ExercicioDTO> carregarExerciciosPorUsuarioId(Long usuarioId) {
         return ExercicioDTO.create(repository.carregarExerciciosPorUsuarioId(usuarioId));
+    }
+
+    public Exercicio getExerxicioByHorario(Timestamp horario) {
+        return repository.getHorario(horario);
     }
 }
 
