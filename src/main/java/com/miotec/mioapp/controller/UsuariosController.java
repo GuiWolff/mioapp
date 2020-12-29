@@ -44,7 +44,7 @@ public class UsuariosController {
             return ResponseEntity.ok(u);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
-        }
+         }
     }
 
 
