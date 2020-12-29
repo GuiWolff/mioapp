@@ -99,7 +99,34 @@ public class UsuarioService {
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(email);
-        msg.setText(readFile());
+        msg.setText(
+
+                " <!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01\n" +
+                        "    Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
+                        "<html xmlns=\"http://www.w3.org/1999/html\">\n" +
+                        "<head>\n" +
+                        "    <meta content=\"text/html\" http-equiv=\"content-type\">\n" +
+                        "    <title>JavaMail com Spring Framework</title>\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "<div id=\"_div\">\n" +
+                        "    <b>JavaMail With Spring Framework</b><br>\n" +
+                        "    Trabalhando com JavaMail em conjunto com o Spring\n" +
+                        "    Framework 3 sem o uso de configuração por XML.<br>\n" +
+                        "\n" +
+                        "    * download\n" +
+                        "    <a href=\"http://www.oracle.com/technetwork/java/javamail/index.html\">\n" +
+                        "        JavaMail\n" +
+                        "    </a> library.<br>\n" +
+                        "\n" +
+                        "    * download\n" +
+                        "    <a href=\"http://www.springsource.org/download/community\">\n" +
+                        "        Spring Framework\n" +
+                        "    </a> library.<br>\n" +
+                        "</div>\n" +
+                        "</body>\n" +
+                        "</html>"
+        );
 //        msg.setSubject("Senha temporária para efetuar login" );
 //        msg.setText("Olá " + u.getNome() + ", sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
 
