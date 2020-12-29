@@ -128,9 +128,10 @@ public class UsuarioService {
 
     }
 
+    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+
     private String readFile() {
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        Resource resource = (Resource) ctx.getResource("classpath:/mensagem.html");
+        Resource resource = ctx.getResource("classpath:/mensagem.html");
         String html = "";
         try {
             BufferedReader bufferedReader =
