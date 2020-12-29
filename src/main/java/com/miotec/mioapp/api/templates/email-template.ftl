@@ -1,41 +1,17 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Java Techie Mail</title>
-</head>
-
-<body>
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td align="center" valign="top" bgcolor="#838383"
-				style="background-color: #838383;"><br> <br>
-				<table width="600" border="0" cellspacing="0" cellpadding="0">
-					<tr>
-						<td align="center" valign="top" bgcolor="#d3be6c"
-							style="background-color: #d3be6c; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000000; padding: 0px 15px 10px 15px;">
-							
-							<div style="font-size: 48px; color:blue;">
-								<b>Java Techie</b>
-							</div>
-							
-							<div style="font-size: 24px; color: #555100;">
-								<br> Sending Email using Spring Boot with <b>FreeMarker
-									template !!! <br>
-							</div>
-							<div>
-								<br> Java Techie is a channel where we create and publish
-								videos on<br> 'how to' about latest technology trends like<br>
-								spring ,spring boot ,hibernate , web services and micro service
-								<br> ""This channel is created to share the knowledge and
-								to gain the knowledge"<br>
-								<br>"Sharing the knowledge is biggest learning" <br> <br>
-								<br> <br> <b>${Name}</b><br>${location}<br>
-								<br>
-							</div>
-						</td>
-					</tr>
-				</table> <br> <br></td>
-		</tr>
-	</table>
-</body>
-</html>
+<h2>&nbsp;</h2>
+<table style="width: 948px;">
+	<tbody>
+	<tr>
+		<td style="width: 942px;">
+			<h2>Recupera&ccedil;&atilde;o de senha!</h2>
+		</td>
+	</tr>
+	</tbody>
+</table>
+<p style="font-size: 1.5em;">Ol&aacute; Guilherme Wolff, este &eacute; um e-mail de recupera&ccedil;&atilde;o de senha para o aplicativo Miotec PelviFit Treiner.</p>
+<p style="font-size: 1.5em;">Sua senha tempor&aacute;ria ser&aacute;&nbsp;<span style="background-color: #33cccc;"><strong style="padding: 0px 5px; color: #ffffff;">73bbe1</strong></span>&nbsp;at&eacute; o momento que voc&ecirc; atualiz&aacute;-la.</p>
+<p style="font-size: 1.5em;">Para atualizar esta senha para sua nova senha, basta acessar o campo de dados cadastrais em configura&ccedil;&otilde;es, ap&oacute;s logar no aplicativo!<br /><br />Tenha &oacute;timos treinos!</p>
+<p style="font-size: 1.5em;"><a href="http://www.miotec.com.b"><img src="https://www.miotec.com.br/wp-content/uploads/2020/01/logo.png" alt="" width="250" height="70" /></a></p>
+<p style="font-size: 1.5em;">&nbsp;</p>
+<p style="font-size: 1.5em;">&nbsp;</p>
+<p>&nbsp;</p>

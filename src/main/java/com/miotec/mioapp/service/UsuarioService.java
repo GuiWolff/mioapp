@@ -5,14 +5,19 @@ import com.miotec.mioapp.domain.Usuario;
 import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.repository.UsuarioRepository;
 import javassist.tools.rmi.ObjectNotFoundException;
+import org.springframework.core.io.Resource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -94,8 +99,10 @@ public class UsuarioService {
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(email);
-        msg.setSubject("Senha temporária para efetuar login" );
-        msg.setText("Olá " + u.getNome() + ", sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+        msg.setText(readFile());
+//        msg.setSubject("Senha temporária para efetuar login" );
+//        msg.setText("Olá " + u.getNome() + ", sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+
         mailSender.send(msg);
 
 
@@ -120,4 +127,24 @@ public class UsuarioService {
 <p>&nbsp;</p>*/
 
     }
+
+    private String readFile() {
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        Resource resource = (Resource) ctx.getResource("classpath:/mensagem.html");
+        String html = "";
+        try {
+            BufferedReader bufferedReader =
+                    new BufferedReader(new FileReader(resource.getFile()));
+            String linha = "";
+            while ((linha = bufferedReader.readLine()) != null) {
+                html = html + linha;
+            }
+            bufferedReader.close();
+            return html;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
