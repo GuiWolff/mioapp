@@ -42,43 +42,26 @@ public class UsuarioService {
     }
 
     public Usuario update(Usuario usuario, Long id) {
-
-        Usuario user = getUsuarioByEmail(usuario.getEmail());
-
-        if(user.getSenha() == usuario.getSenha()){
-
-          usuario.setSenha(usuario.getPassword());
-
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            Assert.notNull(id, "Não foi possivil atualizar o registro.");
-            Optional<Usuario> optional = usuarioRepository.findById(id);
-            ModelMapper m = new ModelMapper();
-            Usuario u = m.map(usuario, Usuario.class);
-            if (optional != null) {
-                Usuario db = optional.get();
-                if(u.getNome() == null) u.setNome(db.getNome());
-                if(u.getEmail() == null) u.setEmail(db.getEmail());
-                if(u.getSenha() == null) {
-                    u.setSenha(encoder.encode(db.getNome()));
-                } else {
-                    u.setSenha(encoder.encode(u.getSenha()));
-                }
-                System.out.println("Usuario id" + u.getNome());
-                usuarioRepository.save(u);
-                return u;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        Assert.notNull(id, "Não foi possivil atualizar o registro.");
+        Optional<Usuario> optional = usuarioRepository.findById(id);
+        ModelMapper m = new ModelMapper();
+        Usuario u = m.map(usuario, Usuario.class);
+        if (optional != null) {
+            Usuario db = optional.get();
+            if(u.getNome() == null) u.setNome(db.getNome());
+            if(u.getEmail() == null) u.setEmail(db.getEmail());
+            if(u.getSenha() == null) {
+                u.setSenha(encoder.encode(db.getNome()));
             } else {
-                throw new RuntimeException("Não foi possivel atualizar o registro");
+                u.setSenha(encoder.encode(u.getSenha()));
             }
-
-        }else {
-            throw new RuntimeException("Senha incorreta");
+            System.out.println("Usuario id" + u.getNome());
+            usuarioRepository.save(u);
+            return u;
+        } else {
+            throw new RuntimeException("Não foi possivel atualizar o registro");
         }
-
-
-
-
-
-
     }
 
 
@@ -103,19 +86,18 @@ public class UsuarioService {
 
 
     public void sendEmail(String email) {
-
-
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String nova_senha = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
         Usuario u = getUsuarioByEmail(email);
         u.setSenha(encoder.encode(nova_senha));
         usuarioRepository.save(u);
 
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(email);
-        msg.setSubject("Senha temporária para efetuar login" );
-        msg.setText("Olá " + u.getNome() + ", sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
-        mailSender.send(msg);
+//        SimpleMailMessage msg = new SimpleMailMessage();
+//        msg.setTo(email);
+//        msg.setSubject("Senha temporária para efetuar login" );
+//        msg.setText("Olá " + u.getNome() + ", sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+//        mailSender.send(msg);
+
 
 
 

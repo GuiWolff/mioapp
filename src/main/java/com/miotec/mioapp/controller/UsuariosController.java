@@ -37,7 +37,7 @@ public class UsuariosController {
         }
     }
 
-    @PostMapping("/buscar_usuario_por_email")
+    @PostMapping("/buscar_usuario_pelo_email")
     public ResponseEntity<?> buscarUsuarioPeloEmail(@RequestBody Usuario usuario) {
         try {
             UsuarioDTO u = UsuarioDTO.create(service.getUsuarioByEmail(usuario.getEmail()));
@@ -49,15 +49,17 @@ public class UsuariosController {
 
 
     @PostMapping("/resetar_senha_usuario")
-    public ResponseEntity<?> resetarSenhaUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> getEmailRecupecao(@RequestBody Usuario usuario) {
         Usuario u = service.getUsuarioByEmail(usuario.getEmail());
-        UsuarioDTO uDto = UsuarioDTO.create(u);
-        if (u != null) {
-            service.sendEmail(u.getEmail());
-            return ResponseEntity.ok(uDto);
-        }
-        return ResponseEntity.notFound().build();
+//        UsuarioDTO uDto = UsuarioDTO.create(u);
+//        if (u != null) {
+//            service.sendEmail(u.getEmail());
+//            return ResponseEntity.ok(u);
+//        }
+//        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(u);
     }
+
 
     @PostMapping("/inserir_usuario")
     public ResponseEntity InserirUsuario(@RequestBody RequisicaoInsercaoUsuarioDTO requisicaoInsercaoUsuario) {
