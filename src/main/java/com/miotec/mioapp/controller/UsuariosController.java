@@ -69,8 +69,19 @@ public class UsuariosController {
         }
     }
 
+    @PostMapping("/buscar_usuario")
+    public ResponseEntity<?> buscarUsuario(@RequestBody Usuario usuario) {
+        try {
+            Usuario u = (service.getUsuarioByEmail(usuario.getEmail()));
+            return ResponseEntity.ok(u);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PutMapping("/alterar_usuario")
     public ResponseEntity alterarUsuario(@RequestBody Usuario usuario) {
+
         UsuarioDTO u = UsuarioDTO.create(service.update(usuario, usuario.getId()));
         return u != null ? ResponseEntity.ok(u) : ResponseEntity.notFound().build();
     }

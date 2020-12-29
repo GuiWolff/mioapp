@@ -11,6 +11,7 @@ public class UsuarioDTO {
     private String email;
     private long id;
 
+
     public static UsuarioDTO create(Usuario u){
         if(u == null){
             u.setNome("Email não encontrado");

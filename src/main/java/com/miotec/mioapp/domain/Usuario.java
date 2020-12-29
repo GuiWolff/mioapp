@@ -20,6 +20,8 @@ public class Usuario implements UserDetails {
     private String nome;
     private String email;
     private String senha;
+    private String novasenha;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

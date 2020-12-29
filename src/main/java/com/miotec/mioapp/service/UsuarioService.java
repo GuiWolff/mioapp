@@ -42,26 +42,43 @@ public class UsuarioService {
     }
 
     public Usuario update(Usuario usuario, Long id) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        Assert.notNull(id, "Não foi possivil atualizar o registro.");
-        Optional<Usuario> optional = usuarioRepository.findById(id);
-        ModelMapper m = new ModelMapper();
-        Usuario u = m.map(usuario, Usuario.class);
-        if (optional != null) {
-            Usuario db = optional.get();
-            if(u.getNome() == null) u.setNome(db.getNome());
-            if(u.getEmail() == null) u.setEmail(db.getEmail());
-            if(u.getSenha() == null) {
-                u.setSenha(encoder.encode(db.getNome()));
+
+        Usuario user = getUsuarioByEmail(usuario.getEmail());
+
+        if(user.getSenha() == usuario.getSenha()){
+
+          usuario.setSenha(usuario.getPassword());
+
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            Assert.notNull(id, "Não foi possivil atualizar o registro.");
+            Optional<Usuario> optional = usuarioRepository.findById(id);
+            ModelMapper m = new ModelMapper();
+            Usuario u = m.map(usuario, Usuario.class);
+            if (optional != null) {
+                Usuario db = optional.get();
+                if(u.getNome() == null) u.setNome(db.getNome());
+                if(u.getEmail() == null) u.setEmail(db.getEmail());
+                if(u.getSenha() == null) {
+                    u.setSenha(encoder.encode(db.getNome()));
+                } else {
+                    u.setSenha(encoder.encode(u.getSenha()));
+                }
+                System.out.println("Usuario id" + u.getNome());
+                usuarioRepository.save(u);
+                return u;
             } else {
-                u.setSenha(encoder.encode(u.getSenha()));
+                throw new RuntimeException("Não foi possivel atualizar o registro");
             }
-            System.out.println("Usuario id" + u.getNome());
-            usuarioRepository.save(u);
-            return u;
-        } else {
-            throw new RuntimeException("Não foi possivel atualizar o registro");
+
+        }else {
+            throw new RuntimeException("Senha incorreta");
         }
+
+
+
+
+
+
     }
 
 
