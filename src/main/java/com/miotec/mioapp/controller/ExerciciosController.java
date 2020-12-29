@@ -32,7 +32,7 @@ public class ExerciciosController {
         return ResponseEntity.ok(exercicios);
     }
 
-    @PostMapping("/carregar_exercicio_por_email_de_usuario")
+    @PostMapping("/buscar_exercicios_por_email_de_usuario")
     public ResponseEntity<?> carregarExercicioPorEmailDeUsuario(@RequestBody Usuario usuario) {
         Usuario user = (usuarioService.getUsuarioByEmail(usuario.getEmail()));
         Long usuario_id = user.getId();
