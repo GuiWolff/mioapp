@@ -25,13 +25,13 @@ public class ProtocoloController {
     private ProtocoloService service;
 
     @PostMapping()
-    public ResponseEntity<List<Protocolo>> get() {
+    public ResponseEntity<List<Protocolo>> buscarTodosProtocolos() {
         List<Protocolo> p = service.getProtocolos();
         return ResponseEntity.ok(p);
     }
 
-    @PostMapping("/id")
-    public ResponseEntity<?> get(@RequestBody Protocolo protocolo) throws ObjectNotFoundException {
+    @PostMapping("/buscar_protocolo_pelo_id")
+    public ResponseEntity<?> buscarProtocoloPeloId(@RequestBody Protocolo protocolo) throws ObjectNotFoundException {
         try {
             Optional<Protocolo> p = service.getProtocoloById(protocolo.getId());
             return ResponseEntity.ok(p);
@@ -40,8 +40,8 @@ public class ProtocoloController {
         }
     }
 
-    @PostMapping("/codigo")
-    public ResponseEntity<?> getProtocoloByCodigo(@RequestBody Protocolo protocolo) {
+    @PostMapping("/buscar_protocolo_por_codigo")
+    public ResponseEntity<?> buscarProtocoloPorCodigo(@RequestBody Protocolo protocolo) {
         try {
             Protocolo p = service.getProtocoloByCodigo(protocolo.getCodigo());
             return ResponseEntity.ok(p);
@@ -50,8 +50,8 @@ public class ProtocoloController {
         }
     }
 
-    @PostMapping("/inserir")
-    public ResponseEntity InsertProtocolo(@RequestBody Protocolo protocolo) {
+    @PostMapping("/inserir_protocolo")
+    public ResponseEntity InserirProtocolo(@RequestBody Protocolo protocolo) {
         try {
             Protocolo p = (service.insert(protocolo));
             return ResponseEntity.created(null).build();
@@ -60,14 +60,14 @@ public class ProtocoloController {
         }
     }
 
-    @PutMapping("/alterar")
-    public ResponseEntity setProtocolo(@RequestBody Protocolo protocolo) {
+    @PutMapping("/alterar_protocolo")
+    public ResponseEntity alterarProtocolo(@RequestBody Protocolo protocolo) {
         Protocolo p = service.update(protocolo, protocolo.getId());
         return p != null ? ResponseEntity.ok(p) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/deletar")
-    public ResponseEntity deleteProtocolo(@RequestBody Protocolo protocolo) {
+    @DeleteMapping("/deletar_protocolo")
+    public ResponseEntity deletarProtocolo(@RequestBody Protocolo protocolo) {
         service.delete(protocolo.getId());
         return ResponseEntity.ok().build();
     }

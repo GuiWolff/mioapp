@@ -9,7 +9,6 @@ import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,13 +22,13 @@ public class UsuariosController {
     private UsuarioService service;
 
     @PostMapping()
-    public ResponseEntity<List<UsuarioDTO>> get() {
+    public ResponseEntity<List<UsuarioDTO>> buscarTodosUsuarios() {
         List<UsuarioDTO> u = service.getUsuarios();
         return ResponseEntity.ok(u);
     }
 
-    @PostMapping("/id")
-    public ResponseEntity<?> get(@RequestBody Usuario usuario) throws ObjectNotFoundException {
+    @PostMapping("/buscar_usuario_pelo_id")
+    public ResponseEntity<?> buscarUsuarioPeloId(@RequestBody Usuario usuario) throws ObjectNotFoundException {
         try {
             UsuarioDTO u = service.getUsuarioById(usuario.getId());
             return ResponseEntity.ok(u);
@@ -38,8 +37,8 @@ public class UsuariosController {
         }
     }
 
-    @PostMapping("/email")
-    public ResponseEntity<?> getUsuarioByEmail(@RequestBody Usuario usuario) {
+    @PostMapping("/buscar_usuario_por_email")
+    public ResponseEntity<?> buscarUsuarioPeloEmail(@RequestBody Usuario usuario) {
         try {
             UsuarioDTO u = UsuarioDTO.create(service.getUsuarioByEmail(usuario.getEmail()));
             return ResponseEntity.ok(u);
@@ -49,8 +48,8 @@ public class UsuariosController {
     }
 
 
-    @PostMapping("/recuperar_senha")
-    public ResponseEntity<?> getEmailRecupecao(@RequestBody Usuario usuario) {
+    @PostMapping("/resetar_senha_usuario")
+    public ResponseEntity<?> resetarSenhaUsuario(@RequestBody Usuario usuario) {
         Usuario u = service.getUsuarioByEmail(usuario.getEmail());
         UsuarioDTO uDto = UsuarioDTO.create(u);
         if (u != null) {
@@ -60,8 +59,8 @@ public class UsuariosController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/inserir")
-    public ResponseEntity InsertUsuario(@RequestBody RequisicaoInsercaoUsuarioDTO requisicaoInsercaoUsuario) {
+    @PostMapping("/inserir_usuario")
+    public ResponseEntity InserirUsuario(@RequestBody RequisicaoInsercaoUsuarioDTO requisicaoInsercaoUsuario) {
         try {
             UsuarioDTO u = (service.insert(requisicaoInsercaoUsuario.criarUsuario()));
             return ResponseEntity.created(null).build();
@@ -70,8 +69,8 @@ public class UsuariosController {
         }
     }
 
-    @PutMapping("/alterar")
-    public ResponseEntity setUsuario(@RequestBody Usuario usuario) {
+    @PutMapping("/alterar_usuario")
+    public ResponseEntity alterarUsuario(@RequestBody Usuario usuario) {
         UsuarioDTO u = UsuarioDTO.create(service.update(usuario, usuario.getId()));
         return u != null ? ResponseEntity.ok(u) : ResponseEntity.notFound().build();
     }

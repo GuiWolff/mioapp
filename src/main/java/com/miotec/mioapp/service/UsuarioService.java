@@ -64,12 +64,6 @@ public class UsuarioService {
         }
     }
 
-//    public void deleteUsuario(Long id) {
-//        Optional<Usuario> usuario = getUsuarioById(id);
-//        if(usuario.isPresent()){
-//            repository.deleteById(id);
-//        }
-//    }
 
     public UsuarioDTO insert(Usuario usuario) throws Exception {
         if (usuario.getSenha().isEmpty()) {

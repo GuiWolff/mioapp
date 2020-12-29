@@ -27,39 +27,39 @@ public class ExerciciosController {
 
 
     @PostMapping()
-    public ResponseEntity<?> get(){
+    public ResponseEntity<?> buscarTodosExercicios(){
         var exercicios = exercicioService.getExercicios();
         return ResponseEntity.ok(exercicios);
     }
 
-    @PostMapping("/get")
-    public ResponseEntity<?> carregarExerciciosPorUsuarioId(@RequestBody Usuario usuario) {
+    @PostMapping("/carregar_exercicio_por_email_de_usuario")
+    public ResponseEntity<?> carregarExercicioPorEmailDeUsuario(@RequestBody Usuario usuario) {
         Usuario user = (usuarioService.getUsuarioByEmail(usuario.getEmail()));
         Long usuario_id = user.getId();
         var exercicios = exercicioService.carregarExerciciosPorUsuarioId(usuario_id);
         return ResponseEntity.ok(exercicios);
     }
 
-    @PostMapping("/horario")
-    public ResponseEntity<?> conferirSeHorarioExiste(@RequestBody Exercicio exercio) {
+    @PostMapping("/buscar_exercicio_por_horario")
+    public ResponseEntity<?> buscarExercicioPorHorario(@RequestBody Exercicio exercio) {
         Exercicio e = (exercicioService.getExerxicioByHorario(exercio.getHorario()));
         return ResponseEntity.ok(e);
     }
 
-    @PostMapping("/id")
-    public Optional<Exercicio> getExercicioById(@RequestBody Exercicio exercicio) {
+    @PostMapping("/buscar_exercicio_por_id")
+    public Optional<Exercicio> buscarExercicioPorId(@RequestBody Exercicio exercicio) {
         return exercicioService.getExercicioById(exercicio.getId());
 
     }
 
-    @PostMapping("/inserir")
-    public Long InsertExercicio(@RequestBody Exercicio exercicio) {
+    @PostMapping("/inserir_exercicio")
+    public Long inserirExercicio(@RequestBody Exercicio exercicio) {
         Exercicio e = exercicioService.insert(exercicio);
         return e.getId();
     }
 
     @DeleteMapping()
-    public void deleteExercicio(@RequestBody Exercicio exercicio) {
+    public void deletarExercicio(@RequestBody Exercicio exercicio) {
         exercicioService.deleteExercicio(exercicio.getId());
 
     }
