@@ -92,11 +92,11 @@ public class UsuarioService {
         u.setSenha(encoder.encode(nova_senha));
         usuarioRepository.save(u);
 
-//        SimpleMailMessage msg = new SimpleMailMessage();
-//        msg.setTo(email);
-//        msg.setSubject("Senha temporária para efetuar login" );
-//        msg.setText("Olá " + u.getNome() + ", sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
-//        mailSender.send(msg);
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+        msg.setSubject("Senha temporária para efetuar login" );
+        msg.setText("Olá " + u.getNome() + ", sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+        mailSender.send(msg);
 
 
 
