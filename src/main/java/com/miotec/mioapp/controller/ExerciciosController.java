@@ -22,10 +22,6 @@ public class ExerciciosController {
     @Autowired
     private ExercicioService exercicioService;
 
-    @Autowired
-    private ExercicioRepository exercicioRepository;
-
-
     @PostMapping()
     public ResponseEntity<?> buscarTodosExercicios(){
         var exercicios = exercicioService.getExercicios();

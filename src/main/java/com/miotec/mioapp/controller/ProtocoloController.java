@@ -31,7 +31,7 @@ public class ProtocoloController {
     }
 
     @PostMapping("/buscar_protocolo_pelo_id")
-    public ResponseEntity<?> buscarProtocoloPeloId(@RequestBody Protocolo protocolo) throws ObjectNotFoundException {
+    public ResponseEntity<?> buscarProtocoloPeloId(@RequestBody Protocolo protocolo){
         try {
             Optional<Protocolo> p = service.getProtocoloById(protocolo.getId());
             return ResponseEntity.ok(p);

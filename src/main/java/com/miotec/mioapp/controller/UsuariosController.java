@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 
@@ -55,7 +56,7 @@ public class UsuariosController {
 
 
     @PostMapping("/resetar_senha_usuario")
-    public ResponseEntity<?> getEmailRecupecao(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> getEmailRecupecao(@RequestBody Usuario usuario) throws MessagingException {
         Usuario u = service.getUsuarioByEmail(usuario.getEmail());
         UsuarioDTO uDto = UsuarioDTO.create(u);
         if (u != null) {

@@ -5,21 +5,14 @@ import com.miotec.mioapp.domain.Usuario;
 import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.repository.UsuarioRepository;
 import javassist.tools.rmi.ObjectNotFoundException;
-import org.springframework.core.io.Resource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +26,7 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private JavaMailSender mailSender;
+    private EmailService emailService;
 
 
     public List<UsuarioDTO> getUsuarios() {
@@ -54,9 +47,9 @@ public class UsuarioService {
         Usuario u = m.map(usuario, Usuario.class);
         if (optional != null) {
             Usuario db = optional.get();
-            if(u.getNome() == null) u.setNome(db.getNome());
-            if(u.getEmail() == null) u.setEmail(db.getEmail());
-            if(u.getSenha() == null) {
+            if (u.getNome() == null) u.setNome(db.getNome());
+            if (u.getEmail() == null) u.setEmail(db.getEmail());
+            if (u.getSenha() == null) {
                 u.setSenha(encoder.encode(db.getNome()));
             } else {
                 u.setSenha(encoder.encode(u.getSenha()));
@@ -68,7 +61,6 @@ public class UsuarioService {
             throw new RuntimeException("Não foi possivel atualizar o registro");
         }
     }
-
 
     public UsuarioDTO insert(Usuario usuario) throws Exception {
         if (usuario.getSenha().isEmpty()) {
@@ -89,90 +81,15 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-
-    public void sendEmail(String email) {
+    public void sendEmail(String email) throws MessagingException {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String nova_senha = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
         Usuario u = getUsuarioByEmail(email);
         u.setSenha(encoder.encode(nova_senha));
         usuarioRepository.save(u);
 
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(email);
-        msg.setText(
+        emailService.enviarEmail(u,nova_senha);
 
-                " <!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01\n" +
-                        "    Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
-                        "<html xmlns=\"http://www.w3.org/1999/html\">\n" +
-                        "<head>\n" +
-                        "    <meta content=\"text/html\" http-equiv=\"content-type\">\n" +
-                        "    <title>JavaMail com Spring Framework</title>\n" +
-                        "</head>\n" +
-                        "<body>\n" +
-                        "<div id=\"_div\">\n" +
-                        "    <b>JavaMail With Spring Framework</b><br>\n" +
-                        "    Trabalhando com JavaMail em conjunto com o Spring\n" +
-                        "    Framework 3 sem o uso de configuração por XML.<br>\n" +
-                        "\n" +
-                        "    * download\n" +
-                        "    <a href=\"http://www.oracle.com/technetwork/java/javamail/index.html\">\n" +
-                        "        JavaMail\n" +
-                        "    </a> library.<br>\n" +
-                        "\n" +
-                        "    * download\n" +
-                        "    <a href=\"http://www.springsource.org/download/community\">\n" +
-                        "        Spring Framework\n" +
-                        "    </a> library.<br>\n" +
-                        "</div>\n" +
-                        "</body>\n" +
-                        "</html>"
-        );
-//        msg.setSubject("Senha temporária para efetuar login" );
-//        msg.setText("Olá " + u.getNome() + ", sua senha temporária para logar em sua conta Miotec é " + nova_senha + "\nAté mais!\nAtt, \nMiotec "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
-
-        mailSender.send(msg);
-
-
-
-
-/*            <h2>&nbsp;</h2>
-<table style="width: 948px;">
-<tbody>
-<tr>
-<td style="width: 942px;">
-<h2>Recupera&ccedil;&atilde;o de senha!</h2>
-</td>
-</tr>
-</tbody>
-</table>
-<p style="font-size: 1.5em;">Ol&aacute; Guilherme Wolff, este &eacute; um e-mail de recupera&ccedil;&atilde;o de senha para o aplicativo Miotec PelviFit Treiner.</p>
-<p style="font-size: 1.5em;">Sua senha tempor&aacute;ria ser&aacute;&nbsp;<span style="background-color: #33cccc;"><strong style="padding: 0px 5px; color: #ffffff;">73bbe1</strong></span>&nbsp;at&eacute; o momento que voc&ecirc; atualiz&aacute;-la.</p>
-<p style="font-size: 1.5em;">Para atualizar esta senha para sua nova senha, basta acessar o campo de dados cadastrais em configura&ccedil;&otilde;es, ap&oacute;s logar no aplicativo!<br /><br />Tenha &oacute;timos treinos!</p>
-<p style="font-size: 1.5em;"><a href="http://www.miotec.com.b"><img src="https://www.miotec.com.br/wp-content/uploads/2020/01/logo.png" alt="" width="250" height="70" /></a></p>
-<p style="font-size: 1.5em;">&nbsp;</p>
-<p style="font-size: 1.5em;">&nbsp;</p>
-<p>&nbsp;</p>*/
-
-    }
-
-    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-
-    private String readFile() {
-        Resource resource = ctx.getResource("classpath:/mensagem.html");
-        String html = "";
-        try {
-            BufferedReader bufferedReader =
-                    new BufferedReader(new FileReader(resource.getFile()));
-            String linha = "";
-            while ((linha = bufferedReader.readLine()) != null) {
-                html = html + linha;
-            }
-            bufferedReader.close();
-            return html;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }
