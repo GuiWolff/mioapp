@@ -7,7 +7,6 @@ import com.miotec.mioapp.repository.UsuarioRepository;
 import javassist.tools.rmi.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -50,7 +49,7 @@ public class UsuarioService {
             if (u.getNome() == null) u.setNome(db.getNome());
             if (u.getEmail() == null) u.setEmail(db.getEmail());
             if (u.getSenha() == null) {
-                u.setSenha(encoder.encode(db.getNome()));
+                u.setSenha(encoder.encode(db.getSenha()));
             } else {
                 u.setSenha(encoder.encode(u.getSenha()));
             }

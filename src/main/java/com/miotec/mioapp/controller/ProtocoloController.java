@@ -72,5 +72,4 @@ public class ProtocoloController {
         return ResponseEntity.ok().build();
     }
 
-
 }

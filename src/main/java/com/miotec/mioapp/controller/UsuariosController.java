@@ -54,7 +54,6 @@ public class UsuariosController {
          }
     }
 
-
     @PostMapping("/resetar_senha_usuario")
     public ResponseEntity<?> getEmailRecupecao(@RequestBody Usuario usuario) throws MessagingException {
         Usuario u = service.getUsuarioByEmail(usuario.getEmail());
@@ -65,7 +64,6 @@ public class UsuariosController {
         }
         return ResponseEntity.notFound().build();
     }
-
 
     @PostMapping("/inserir_usuario")
     public ResponseEntity InserirUsuario(@RequestBody RequisicaoInsercaoUsuarioDTO requisicaoInsercaoUsuario) {
