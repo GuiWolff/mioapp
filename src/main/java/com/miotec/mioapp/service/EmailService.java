@@ -23,7 +23,7 @@ public class EmailService {
         helper.setSubject("Recuperação de senha App Pelvifit Trainer ");
 
         String html =
-
+        "<meta id = \"metaname\" name=\"IoB \" content=\"width=device-width,initial-scale=2.0\" charset=\"UTF-8\">"+
         "<table width=\"692\" width=\"100%\"cellspacing=\"0\" cellpadding=\"0\">\n" +
                 "<tbody>\n" +
                 "<tr>\n" +
