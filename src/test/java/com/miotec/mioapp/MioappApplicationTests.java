@@ -1,19 +1,26 @@
 package com.miotec.mioapp;
 
 import com.miotec.mioapp.domain.Exercicio;
-import com.miotec.mioapp.repository.ExercicioRepository;
 import com.miotec.mioapp.domain.Usuario;
+import com.miotec.mioapp.repository.ExercicioRepository;
 import com.miotec.mioapp.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.*;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,7 +33,7 @@ class MioappApplicationTests {
     private ExercicioRepository exercicioRepositor;
 
     @Test
-    void testeUsuario() {
+    void testeUsuario() throws ParseException {
 
         List<String> nomes_teste = new ArrayList<String>();
         nomes_teste.add("Guilherme Wolff");
@@ -54,11 +61,14 @@ class MioappApplicationTests {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+        String data = "08/06/1990";
+
         for (int i = 0; i < 10; i++) {
             Usuario usuario = new Usuario();
             usuario.setNome(nomes_teste.get(i));
             usuario.setEmail(emails_teste.get(i));
             usuario.setSenha(encoder.encode("0123"));
+            usuario.setDateDeNascimento(LocalDate.parse(data,DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             usuarioRepository.save(usuario);
 
             Optional<Usuario> u = usuarioRepository.findById(Long.valueOf(i + 1));

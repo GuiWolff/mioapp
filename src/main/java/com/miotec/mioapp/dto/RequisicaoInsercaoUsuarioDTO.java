@@ -5,12 +5,15 @@ import lombok.Data;
 import lombok.var;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDate;
+
 @Data
 public class RequisicaoInsercaoUsuarioDTO {
 
     private String nome;
     private String email;
     private String senha;
+    private LocalDate dataDeNascimento;
 
     public Usuario criarUsuario(){
 
@@ -20,6 +23,7 @@ public class RequisicaoInsercaoUsuarioDTO {
         usuario.setNome(this.nome);
         usuario.setEmail(this.email);
         usuario.setSenha(encoder.encode(this.senha));
+        usuario.setDateDeNascimento(this.dataDeNascimento);
 
         return usuario;
     }
