@@ -19,7 +19,7 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private LocalDate dateDeNascimento;
+    private LocalDate dataDeNascimento;
     private String email;
     private String senha;
 

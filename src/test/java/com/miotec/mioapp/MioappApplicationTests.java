@@ -8,13 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -68,7 +66,7 @@ class MioappApplicationTests {
             usuario.setNome(nomes_teste.get(i));
             usuario.setEmail(emails_teste.get(i));
             usuario.setSenha(encoder.encode("0123"));
-            usuario.setDateDeNascimento(LocalDate.parse(data,DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            usuario.setDataDeNascimento(LocalDate.parse(data,DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             usuarioRepository.save(usuario);
 
             Optional<Usuario> u = usuarioRepository.findById(Long.valueOf(i + 1));

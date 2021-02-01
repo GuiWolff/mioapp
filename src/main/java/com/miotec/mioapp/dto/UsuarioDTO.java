@@ -4,7 +4,7 @@ import com.miotec.mioapp.domain.Usuario;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class UsuarioDTO {
@@ -12,7 +12,7 @@ public class UsuarioDTO {
     private String nome;
     private String email;
     private long id;
-    private Date dataDeNascimento;
+    private LocalDate dataDeNascimento;
 
 
     public static UsuarioDTO create(Usuario u){

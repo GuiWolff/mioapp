@@ -23,7 +23,7 @@ public class RequisicaoInsercaoUsuarioDTO {
         usuario.setNome(this.nome);
         usuario.setEmail(this.email);
         usuario.setSenha(encoder.encode(this.senha));
-        usuario.setDateDeNascimento(this.dataDeNascimento);
+        usuario.setDataDeNascimento(this.dataDeNascimento);
 
         return usuario;
     }
