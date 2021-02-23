@@ -1,8 +1,10 @@
 package com.miotec.mioapp.service;
 
 
+import com.miotec.mioapp.domain.Usuario;
 import com.miotec.mioapp.dto.ExercicioDTO;
 import com.miotec.mioapp.domain.Exercicio;
+import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.repository.ExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,9 +39,10 @@ public class ExercicioService {
         Assert.isNull(exercicio.getId(), "Não foi possivil inserir o registro.");
         if(repository.getHorario(exercicio.getHorario()) != null){
             return repository.getHorario(exercicio.getHorario());
-        }else{
+        } else{
             return repository.save(exercicio);
         }
+
     }
 
     public List<ExercicioDTO> carregarExerciciosPorUsuarioId(Long usuarioId) {

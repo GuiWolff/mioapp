@@ -18,6 +18,7 @@ public class DadosExercicioDTO {
     private Timestamp horario;
     private Double nota_avaliativa;
     private Long id;
+    private Long id_protocolo;
 
 
 }

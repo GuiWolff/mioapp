@@ -1,10 +1,12 @@
 package com.miotec.mioapp.controller;
 
 import com.miotec.mioapp.domain.Exercicio;
+import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.repository.ExercicioRepository;
 import com.miotec.mioapp.service.ExercicioService;
 import com.miotec.mioapp.domain.Usuario;
 import com.miotec.mioapp.service.UsuarioService;
+import javassist.tools.rmi.ObjectNotFoundException;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +51,7 @@ public class ExerciciosController {
     }
 
     @PostMapping("/inserir_exercicio")
-    public Long inserirExercicio(@RequestBody Exercicio exercicio) {
+    public Long inserirExercicio(@RequestBody Exercicio exercicio){
         Exercicio e = exercicioService.insert(exercicio);
         return e.getId();
     }

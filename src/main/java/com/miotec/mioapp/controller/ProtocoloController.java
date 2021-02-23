@@ -27,6 +27,7 @@ public class ProtocoloController {
     @PostMapping()
     public ResponseEntity<List<Protocolo>> buscarTodosProtocolos() {
         List<Protocolo> p = service.getProtocolos();
+        System.out.println(p);
         return ResponseEntity.ok(p);
     }
 

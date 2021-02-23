@@ -5,11 +5,9 @@ import com.miotec.mioapp.domain.Usuario;
 import com.miotec.mioapp.dto.RequisicaoInsercaoUsuarioDTO;
 import com.miotec.mioapp.dto.UsuarioDTO;
 import com.miotec.mioapp.service.UsuarioService;
-import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -59,9 +57,20 @@ public class UsuariosController {
     public ResponseEntity<?> getEmailRecupecao(@RequestBody Usuario usuario) throws MessagingException {
         Usuario u = service.getUsuarioByEmail(usuario.getEmail());
         UsuarioDTO uDto = UsuarioDTO.create(u);
-        if (u != null) {
-            service.sendEmail(u.getEmail());
-            return ResponseEntity.ok(u);
+        if (uDto != null) {
+            service.sendEmailDeRecuperacao(u.getEmail());
+            return ResponseEntity.ok(uDto);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/criar_nova_senha_usuario")
+    public ResponseEntity<?> getEmailCriacaoDeConta(@RequestBody Usuario usuario) throws MessagingException {
+        Usuario u = service.getUsuarioByEmail(usuario.getEmail());
+        UsuarioDTO uDto = UsuarioDTO.create(u);
+        if (uDto != null) {
+            service.sendEmailDeCriacaoDeConta(u.getEmail());
+            return ResponseEntity.ok(uDto);
         }
         return ResponseEntity.notFound().build();
     }
@@ -69,7 +78,7 @@ public class UsuariosController {
     @PostMapping("/inserir_usuario")
     public ResponseEntity InserirUsuario(@RequestBody RequisicaoInsercaoUsuarioDTO requisicaoInsercaoUsuario) {
         try {
-            UsuarioDTO u = (service.insert(requisicaoInsercaoUsuario.criarUsuario()));
+            service.insert(requisicaoInsercaoUsuario.criarUsuario());
             return ResponseEntity.created(null).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -88,12 +97,20 @@ public class UsuariosController {
 
 
     @PutMapping("/alterar_usuario")
-//    @Secured({"USER"})
     public ResponseEntity alterarUsuario(@RequestBody Usuario usuario) {
 
         UsuarioDTO u = UsuarioDTO.create(service.update(usuario, usuario.getId()));
         return u != null ? ResponseEntity.ok(u) : ResponseEntity.notFound().build();
     }
+
+    @PutMapping("/excluir_dados_usuario")
+    public ResponseEntity alterarCadastroUsuario(@RequestBody Usuario usuario) {
+
+        UsuarioDTO u = UsuarioDTO.create(service.updateLogin(usuario, usuario.getId()));
+        return u != null ? ResponseEntity.ok(u) : ResponseEntity.notFound().build();
+    }
+
+
 
     @DeleteMapping()
     public ResponseEntity deleteUsuario(@RequestBody Usuario usuario) {

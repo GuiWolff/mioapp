@@ -16,5 +16,6 @@ public class Protocolo {
     private Long id;
     private String protocolo;
     private String codigo;
+    private String descricao;
 
 }

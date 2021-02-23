@@ -20,4 +20,7 @@ public interface ExercicioRepository extends JpaRepository<Exercicio,Long>{
     @Query("select e from Exercicio e where e.horario = :horario")
     Exercicio getHorario(@Param("horario") Timestamp horario);
 
+
+
+
 }
