@@ -62,8 +62,7 @@ public class EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
         helper.setSubject("Criação de conta App Pelvifit Trainer ");
 
-        String html = "Olá " +usuario.getNome()+ ", sua senha de acesso é "+senha+" " +
-                "\nPara alterar sua senha, no aplicativo acesse o menu > conta > alterar senha!";
+        String html = "Olá " +usuario.getNome()+ ", sua senha de acesso é "+senha+"\nPara alterar sua senha, no aplicativo acesse o menu > conta > alterar senha!";
 
         helper.setText(html, true);
         helper.setTo(usuario.getEmail());
