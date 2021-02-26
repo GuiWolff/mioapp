@@ -23,7 +23,6 @@ public class EmailService {
         helper.setSubject("Recuperação de senha App Pelvifit Trainer ");
 
         String html =
-        "<meta id = \"metaname\" name=\"IoB \" content=\"width=device-width,initial-scale=2.0\" charset=\"UTF-8\">"+
         "<table width=\"692\" width=\"100%\"cellspacing=\"0\" cellpadding=\"0\">\n" +
                 "<tbody>\n" +
                 "<tr>\n" +
@@ -62,7 +61,15 @@ public class EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
         helper.setSubject("Criação de conta App Pelvifit Trainer ");
 
-        String html = "Olá " +usuario.getNome()+ ", sua senha de acesso é "+senha+"\nPara alterar sua senha, no aplicativo acesse o menu > conta > alterar senha!";
+        String html =
+                "<meta id = \"metaname\" name=\"IoB \" content=\"width=device-width,initial-scale=2.0\" charset=\"UTF-8\">"+
+                        "<table width=\"692\" width=\"100%\"cellspacing=\"0\" cellpadding=\"0\">\n" +
+                        "<tbody>\n" +
+                        "<tr>\n" +
+                        "Olá " +usuario.getNome()+ ", sua senha de acesso é "+senha+"\nPara alterar sua senha, no aplicativo acesse o menu > conta > alterar senha!"+
+                        "</tr>\n" +
+                        "</tbody>\n" +
+                        "</table>";
 
         helper.setText(html, true);
         helper.setTo(usuario.getEmail());
