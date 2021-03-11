@@ -26,14 +26,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        AuthenticationManager authManager = authenticationManager();
 
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
                 .and().authorizeRequests()
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .and().csrf().disable()
-                .addFilter(new CorsConfig());
+                .addFilter(new CorsConfig())
+        ;
     }
 
     @Override
