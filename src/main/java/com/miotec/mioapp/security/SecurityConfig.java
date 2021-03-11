@@ -4,6 +4,7 @@ package com.miotec.mioapp.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -28,13 +29,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
             http
-//                    .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
+                    .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
                     .authorizeRequests()
+                    .antMatchers(HttpMethod.POST, "/api/v1/").permitAll()
                     .anyRequest().authenticated()
                     .and().httpBasic()
                     .and().csrf().disable()
 
-//                    .addFilter(new CorsConfig())
+                    .addFilter(new CorsConfig())
             ;
     }
 
