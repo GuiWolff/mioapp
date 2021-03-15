@@ -81,7 +81,7 @@ public class UsuariosController {
             service.insert(requisicaoInsercaoUsuario.criarUsuario());
             return ResponseEntity.created(null).build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
