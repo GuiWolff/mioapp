@@ -53,7 +53,7 @@ public class UsuariosController {
          }
     }
 
-    @PostMapping("/verifica_email")
+    @GetMapping("/verifica_email")
     public ResponseEntity<?> verificaEmail(@RequestBody Usuario usuario){
         Usuario u = service.getUsuarioByEmail(usuario.getEmail());
 
