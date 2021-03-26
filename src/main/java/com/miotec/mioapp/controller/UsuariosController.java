@@ -97,16 +97,6 @@ public class UsuariosController {
         }
     }
 
-    @PostMapping("/inserir_usuario_oauth2")
-    public ResponseEntity<?> InserirUsuarioOAuth2(@RequestBody Usuario u ) {
-        try {
-            service.insert(u);
-            return ResponseEntity.ok(u);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Serviço interrompido.");
-        }
-     }
-
     @PostMapping("/buscar_usuario")
     public ResponseEntity<?> buscarUsuario(@RequestBody Usuario usuario) {
         try {
