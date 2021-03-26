@@ -53,6 +53,18 @@ public class UsuariosController {
          }
     }
 
+    @PostMapping("/verifica_email")
+    public ResponseEntity<?> verificaEmail(@RequestBody Usuario usuario){
+        Usuario u = service.getUsuarioByEmail(usuario.getEmail());
+
+        if (u != null) {
+            return ResponseEntity.status(HttpStatus.OK).body("Email ja cadastrado");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Email nao cadastrado");
+    }
+
+
+
     @PostMapping("/resetar_senha_usuario")
     public ResponseEntity<?> getEmailRecupecao(@RequestBody Usuario usuario) throws MessagingException {
         Usuario u = service.getUsuarioByEmail(usuario.getEmail());

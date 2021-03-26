@@ -79,6 +79,9 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
+
+
+
     public void sendEmailDeRecuperacao(String email) throws MessagingException {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String nova_senha = UUID.randomUUID().toString().replace("-", "").substring(0, 6);
