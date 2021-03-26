@@ -105,7 +105,7 @@ public class UsuariosController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Serviço interrompido.");
         }
-    }
+     }
 
     @PostMapping("/buscar_usuario")
     public ResponseEntity<?> buscarUsuario(@RequestBody Usuario usuario) {
