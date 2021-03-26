@@ -22,7 +22,7 @@ public class Usuario implements UserDetails {
     private LocalDate dataDeNascimento;
     private String email;
     private String senha;
-    private boolean loginManual;
+     private boolean loginManual;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
