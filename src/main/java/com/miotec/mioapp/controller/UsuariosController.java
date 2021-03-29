@@ -88,10 +88,9 @@ public class UsuariosController {
     }
 
     @PostMapping("/inserir_usuario")
-    public ResponseEntity InserirUsuario(@RequestBody RequisicaoInsercaoUsuarioDTO requisicaoInsercaoUsuario) {
+    public ResponseEntity<?> InserirUsuario(@RequestBody RequisicaoInsercaoUsuarioDTO requisicaoInsercaoUsuario) {
         try {
-            service.insert(requisicaoInsercaoUsuario.criarUsuario());
-            return ResponseEntity.created(null).build();
+            return new ResponseEntity<>(service.insert(requisicaoInsercaoUsuario.criarUsuario()), HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
