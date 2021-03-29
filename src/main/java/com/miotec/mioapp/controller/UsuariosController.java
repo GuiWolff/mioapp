@@ -55,10 +55,10 @@ public class UsuariosController {
 
     @PostMapping("/verificar_email")
     public ResponseEntity<?> verificaEmail(@RequestBody Usuario usuario){
-        Usuario u = service.getUsuarioByEmail(usuario.getEmail());
+        UsuarioDTO u = UsuarioDTO.create(service.getUsuarioByEmail(usuario.getEmail()));
 
         if (u != null) {
-            return ResponseEntity.status(HttpStatus.OK).body("Email ja cadastrado");
+            return ResponseEntity.ok(u);
         }
         return ResponseEntity.status(HttpStatus.OK).body("Email nao cadastrado");
     }
