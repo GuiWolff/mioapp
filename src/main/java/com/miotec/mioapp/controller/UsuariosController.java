@@ -60,7 +60,7 @@ public class UsuariosController {
             if (u != null) {
                 return new ResponseEntity<>(UsuarioDTO.create(service.getUsuarioByEmail(usuario.getEmail())), HttpStatus.OK);
             }else
-                return ResponseEntity.status(HttpStatus.OK).body("Email nao cadastrado");
+                return ResponseEntity.noContent().build();
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email nao cadastrado");
         }
